@@ -1,0 +1,34 @@
+language: cpp
+
+env:
+  global:
+    # DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64
+    secure: kw6T8Uyx/gwgWaCwmc26LfeAxiL9JGZ1b0fj4jFbEoWznexu4VEPIjFKyEQZBD2lPdAnKyzKvDCsyaTTjYc2gD74V96fwA4toTJEpC+57xqPB58d1NxySEOkBFAzdfwy0azP/w+J6Ycu1BQSLvKsSsAIURft7MmJSJ/1d3JQ7tPEvZhn0iUg3cxuZXZi4AQUnz5xAu6h7yzjD01nMrGYnvajr1fb/po7LR4TdoKau/56MIYjaVt7M3avgAxxTt6/VwDMpZn8ut7VFwabi4mofYL3K1EBPP9mWReV46U54RmWnepIlWb5ecuTaCygSus8llZ43fPi6diodfTMM+yW+8znQHN4OpgdLOeW3sxpSOCERXs/GmfniN9Lfu7dBZzyJZBOApHaAEfpAAFOzjlPD2/0xfltqNjSVioh4IpXFQA+0yEYpdsv58a5h/UDpeYyqPl/6naqnUn8UtJKFkpQCVIxp+orzphl33O/Vta2WDIYD1/oJ6T4a840amoQqkB2IDm5Jn+8G126m3Z5zHXZ13t1vEoUWZWJxAS1ziqITh7cK7vQ7Oswhbvh2ATMe+Ikh6fg0Y0jtgjXTxrY0lyjr/DrZTYhpCmkOQ2onfyAj6xPbShzOgdkJifaqIrGcRf7hy1cjy1389x1UYslFbhIdyneCF4lmTJv/6Hg9ZONVo4=
+
+# Downloading ccache's cache is around 6s, uploading is around 3s.
+cache: ccache
+
+compiler:
+- gcc
+
+#addons:
+#  apt:
+#    sources:
+#    - ubuntu-toolchain-r-test
+#    packages:
+#    - g++-6
+
+#install:
+#- "[ $CC = gcc ] && export CC=gcc-6 || true"
+#- "[ $CXX = g++ ] && export CXX=g++-6 || true"
+
+script:
+#- mkdir -p build && cd build && cmake ..
+#- make
+#- make test
+- curl -H "Content-Type: application/json" --data '{"build": true}' -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-proxy-oxts/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/
+
+
+notifications:
+  slack:
+    secure: hT0aR7BpGKmXlR4JxHSVsn4q6ofbNWvo3UWpHLgoiXGdpCeQ9Aczu8nMcG4ybnGMrg/PeSnvsHjaIvtgKfow35MCWur0uygQNqZiiaDjDEEeLzcvYo8/v6PKqpp2VOPqIEzXjZxAR8sWB82W8f/xXuB5tVaFdVXToA2UOBdlS49tc51wunj8DPx17NE6B8uvU4Zo4g0dpg5x31uzXvjOkH48y8V58JgaXgATojzRoEEV2jytlZUumA4KM5zOGZnAkGO2iC0lxbRnZROArSAd0A4Tg4cxDXuWFIxM9m9c5YxHtwMYMb5wWeAHRT4zGYVZeYjs5wOjZfTOzsihXGt1kEumTv6AxME0BYxeZQuw+fOapAyARqvuOnkUADBwxfK0Mwqb4HI2uffirz20v6XA0WmOQTuXL6K5Sy/+O4O076rFCHYUcpntHqXKeHGw9ERGBOaaLjOdm+ga7zbeTXbqdAw/h0Y8iYc2UyB5ChS9ysOJnMmcoLfTLJmNes0ll4dt9QNDR+01oASor5S7XVfe148+sZqhCM+fn6vudWSlxbhuyddFvAm0bEM/aqNQm9uvKgwB85BO8C6DRiGXjdWRjqF0aPhZrtHrJb7xZeStdDxXuI+5YHK6wSChgw8WX7zMsTgZ2UYBUURsmnwkNPTMhh53CHmRKSu8LGApUq2oGhc=

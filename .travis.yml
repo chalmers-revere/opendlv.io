@@ -22,8 +22,13 @@ env:
     # DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64
     secure: kw6T8Uyx/gwgWaCwmc26LfeAxiL9JGZ1b0fj4jFbEoWznexu4VEPIjFKyEQZBD2lPdAnKyzKvDCsyaTTjYc2gD74V96fwA4toTJEpC+57xqPB58d1NxySEOkBFAzdfwy0azP/w+J6Ycu1BQSLvKsSsAIURft7MmJSJ/1d3JQ7tPEvZhn0iUg3cxuZXZi4AQUnz5xAu6h7yzjD01nMrGYnvajr1fb/po7LR4TdoKau/56MIYjaVt7M3avgAxxTt6/VwDMpZn8ut7VFwabi4mofYL3K1EBPP9mWReV46U54RmWnepIlWb5ecuTaCygSus8llZ43fPi6diodfTMM+yW+8znQHN4OpgdLOeW3sxpSOCERXs/GmfniN9Lfu7dBZzyJZBOApHaAEfpAAFOzjlPD2/0xfltqNjSVioh4IpXFQA+0yEYpdsv58a5h/UDpeYyqPl/6naqnUn8UtJKFkpQCVIxp+orzphl33O/Vta2WDIYD1/oJ6T4a840amoQqkB2IDm5Jn+8G126m3Z5zHXZ13t1vEoUWZWJxAS1ziqITh7cK7vQ7Oswhbvh2ATMe+Ikh6fg0Y0jtgjXTxrY0lyjr/DrZTYhpCmkOQ2onfyAj6xPbShzOgdkJifaqIrGcRf7hy1cjy1389x1UYslFbhIdyneCF4lmTJv/6Hg9ZONVo4=
 
+before_script:
+- PROXY_OXTS=$(git diff HEAD~ --name-only | grep "proxy-oxts/" >/dev/null && echo 1 || echo 0)
+- PROXY_TRIMBLE=$(git diff HEAD~ --name-only | grep "proxy-trimble/" >/dev/null && echo 1 || echo 0)
 
 script:
+- echo "Build PROXY_OXTS $PROXY_OXTS"
+- echo "Build PROXY_TRIMBLE $PROXY_TRIMBLE"
 #- cd && proxy-oxts && mkdir -p build && cd build && cmake ..
 #- make
 #- make test

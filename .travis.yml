@@ -1,5 +1,10 @@
 language: cpp
 
+# What branches are we reacting upon.
+branches:
+    only:
+    - master
+
 # Downloading ccache's cache is around 6s, uploading is around 3s.
 cache: ccache
 
@@ -27,13 +32,13 @@ env:
 
 before_script:
 # Check what projects need to be built.
-- PROXY_OXTS=$(git diff HEAD~ --name-only | grep "proxy-oxts/" >/dev/null && echo 1 || echo 0)
-- PROXY_TRIMBLE=$(git diff HEAD~ --name-only | grep "proxy-trimble/" >/dev/null && echo 1 || echo 0)
+- PROXY_OXTS=$(git diff HEAD~ --name-only | grep "proxy-oxts/" >/dev/null && echo "proxy-oxts" || echo "")
+- PROXY_TRIMBLE=$(git diff HEAD~ --name-only | grep "proxy-trimble/" >/dev/null && echo "proxy-trimble" || echo "")
 
 
 script:
 # Build the projects.
-- if [[ "${PROXY_OXTS}" == "1" ]]; then cd proxy-oxts && mkdir -p build && cd build && cmake .. && make && make test && curl --data docker_tag=`cat ../VERSION` -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-proxy-oxts/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/; fi
+- if [[ "${PROXY_OXTS}" != "" ]]; then cd ${PROXY_OXTS} && mkdir -p build && cd build && cmake .. && make && make test && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/; fi
 
 
 notifications:

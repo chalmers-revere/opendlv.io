@@ -21,16 +21,11 @@ No dependencies! You just need a C++14-compliant compiler to compile this projec
 
 
 ## Usage
-This microservice is created automatically on changes to this repository via Docker's public registry for [x86_64](https://hub.docker.com/r/seresearch/opendlv.sensors.oxts) and [armhf](https://hub.docker.com/r/seresearch/opendlv.sensors.oxts-armhf).
-
-To run this microservice, simply start it as follows to get a usage description:
-```
-docker run --rm seresearch/opendlv.sensors.oxts-multi
-```
+This microservice is created automatically on changes to this repository via Docker's public registry for [x86_64](https://hub.docker.com/r/chalmersrevere/opendlv.io-proxy-oxts/tags/).
 
 To run this microservice for connecting to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111, simply start it as follows to get a usage description:
 ```
-docker run --rm --net=host seresearch/opendlv.sensors.oxts 0.0.0.0 3000 111
+docker run --rm --net=host chalmersrevere/opendlv.io-proxy-oxts oxts 0.0.0.0 3000 111
 ```
 
 ## Build from sources on the example of Ubuntu 16.04 LTS

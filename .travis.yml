@@ -11,21 +11,21 @@ cache: ccache
 compiler:
 - gcc
 
-#addons:
-#  apt:
-#    sources:
-#    - ubuntu-toolchain-r-test
-#    packages:
-#    - g++-6
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-6
 
-#install:
-#- "[ $CC = gcc ] && export CC=gcc-6 || true"
-#- "[ $CXX = g++ ] && export CXX=g++-6 || true"
+install:
+- "[ $CC = gcc ] && export CC=gcc-6 || true"
+- "[ $CXX = g++ ] && export CXX=g++-6 || true"
 
 script:
-#- mkdir -p build && cd build && cmake ..
-#- make
-#- make test
+- cd && proxy-oxts && mkdir -p build && cd build && cmake ..
+- make
+- make test
 - curl -H "Content-Type: application/json" --data '{"build": true}' -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-proxy-oxts/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/
 
 

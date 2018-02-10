@@ -30,7 +30,8 @@ env:
     - secure: "kw6T8Uyx/gwgWaCwmc26LfeAxiL9JGZ1b0fj4jFbEoWznexu4VEPIjFKyEQZBD2lPdAnKyzKvDCsyaTTjYc2gD74V96fwA4toTJEpC+57xqPB58d1NxySEOkBFAzdfwy0azP/w+J6Ycu1BQSLvKsSsAIURft7MmJSJ/1d3JQ7tPEvZhn0iUg3cxuZXZi4AQUnz5xAu6h7yzjD01nMrGYnvajr1fb/po7LR4TdoKau/56MIYjaVt7M3avgAxxTt6/VwDMpZn8ut7VFwabi4mofYL3K1EBPP9mWReV46U54RmWnepIlWb5ecuTaCygSus8llZ43fPi6diodfTMM+yW+8znQHN4OpgdLOeW3sxpSOCERXs/GmfniN9Lfu7dBZzyJZBOApHaAEfpAAFOzjlPD2/0xfltqNjSVioh4IpXFQA+0yEYpdsv58a5h/UDpeYyqPl/6naqnUn8UtJKFkpQCVIxp+orzphl33O/Vta2WDIYD1/oJ6T4a840amoQqkB2IDm5Jn+8G126m3Z5zHXZ13t1vEoUWZWJxAS1ziqITh7cK7vQ7Oswhbvh2ATMe+Ikh6fg0Y0jtgjXTxrY0lyjr/DrZTYhpCmkOQ2onfyAj6xPbShzOgdkJifaqIrGcRf7hy1cjy1389x1UYslFbhIdyneCF4lmTJv/6Hg9ZONVo4="
     # DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_ARMHF
     - secure: "oipjjb6syFZkvkzz7TGmX+VmP401iZmlprLgJf/MrEij0jr63RkTz6FknItLZv9V/5h3PLoQVwOsSYyQNZHnkml+ChiqUrgYj7XK0+fCJTVOhIP50+Py4jJX3DELchEP8VH9F0Z0K58/5Tp73MGJjk2en9+mbE57JdXGjCUulPr3dIAT4kIk3I1PPs+ZmuT4Tb3iFTKcWIYCFzZRcMkJNKDPZ1/RQGvwPRaOt+5qdACzJAWpRUHC81/gN6TWAL60yZVX+NBD+1E+J5rWZ4176FktA8uVDbBRCk3L2Jlk7xPVclBdtCh3u7Xh6ExvlxrPO7IgklF4BUWkPtm9XJANYaBXxJSbcZHDgUFp5ScZFsbunTfhTevNKc+wKzbSg5EVUbmc1+4ZGQf0BNXznDsshr2groVnSIwIBjcPtFtco3zmBbRcsAtcf881ISKOXhcMjtwZOodSsv1vVECn40G1EwW0FJxUGvH+x3nNmGnYqt0YgmAcSvIIhx/45pjmhDs+4tYL6p4JX0+guZ7pIyQnTSZB1wgRKLPtmkLjmvzGdCarPlAOvLPz/qpqHp7uvsv+u7Xcwhel44BiriO+12gPSqdqXyv1wr2Fand3xGvpiqZgAi9CcM6ARPAKgUrcn/tKHkh1NJlL1+yGnU7xWnQus6RO7ETgU4golK7NjXn5plk="
-
+    # DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_AARCH64
+    - secure: "ec8h5d8Cvu7kLtjdM3PruXOB2JigM/lDeiEi6fiw8Ac3o6fePq/N9bbobY9Gc5Wp7BfI9+4YrTfWt6tdCJV/bpQGWexByjId7DXW+9D76fI9L47GjSRyrOshiaALvoL5jKSeMLNIEODq8p1mtqZPPvHgsJOoKF6Mj5LA7PWwgCAAqzhsNO14SuKnY6KREMh3vSf267tA/p9MoLCqcbHUhek9KPnUOMAguNDPTydK6OUaHgeWENgLImWFekKpjLHgPcjTaF54P/jRcOv0KcVhOXc9Mkn5rh53qKw6SiRQ4+q1LEnHzaH8I/Wpq3K8p4iAfb70qDEm+E86lckx4VigDJXJdW2+VVyL9YtU+ElEF5z4cAxziDih/HYd7sgjzb5NwMWz2hE2cgR5lkvA5p5EOZTqtZtBLuGphQlJJzIDfZA5/oswbtCEOrmoisW7cyqFHz4UskmGn4/kXAqWcp4ztJ99k9SDNe7HnDiRBQ/PRkfBmX7EEnGov5u0oRIRCB2um7s5Kl6dQr8owDGRjOEaAMQZx1/d8nOHzm3W94UUFi0MhonSIhM84IGyRcESqsLRZJvahpjH/IBC8pD2/ikLI5AE87VYx4cJH7klQXdgyFAQF9Hh/cPLB+j+t50jDA/Btuk07K7BGLWif6A45JaTvn5+w+J3OIdEBb2012TbMTg="
 
 
 before_script:
@@ -41,7 +42,7 @@ before_script:
 
 script:
 # Build the projects.
-- if [[ "${PROXY_OXTS}" != "" ]]; then cd ${PROXY_OXTS} && mkdir -p build && cd build && cmake .. && make && make test && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/ && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}-armhf/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_ARMHF/; fi
+- if [[ "${PROXY_OXTS}" != "" ]]; then cd ${PROXY_OXTS} && mkdir -p build && cd build && cmake .. && make && make test && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/ && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}-armhf/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_ARMHF/ && curl --data build=true -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-${PROXY_OXTS}-aarch64/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_AARCH64/; fi
 
 
 notifications:

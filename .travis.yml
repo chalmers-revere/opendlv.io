@@ -13,7 +13,6 @@ addons:
     packages:
     - g++-6
 
-
 install:
 - "[ $CC = gcc ] && export CC=gcc-6 || true"
 - "[ $CXX = g++ ] && export CXX=g++-6 || true"
@@ -33,7 +32,8 @@ before_script:
 
 
 script:
-- if [[ "${PROXY_OXTS}" == "1" ]]; then cd && proxy-oxts && mkdir -p build && cd build && cmake .. && make && make test && curl --data docker_tag=`cat proxy-oxts/VERSION` -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-proxy-oxts/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/ fi
+# Build the projects.
+- if [[ "${PROXY_OXTS}" == "1" ]]; then cd && proxy-oxts && mkdir -p build && cd build && cmake .. && make && make test && curl --data docker_tag=`cat ../VERSION` -X POST https://registry.hub.docker.com/u/chalmersrevere/opendlv.io-proxy-oxts/trigger/$DOCKER_HUB_OPENDLV_IO_PROXY_OXTS_X86_64/; fi
 
 
 notifications:

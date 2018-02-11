@@ -27,9 +27,9 @@ This microservice is created automatically on changes to this repository via Doc
 * [armhf](https://hub.docker.com/r/chalmersrevere/opendlv.io-armhf/tags/)
 * [aarch64](https://hub.docker.com/r/chalmersrevere/opendlv.io-aarch64/tags/)
 
-To run this microservice for connecting to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111, simply start it as follows to get a usage description:
+To run this microservice using our pre-built Docker multi-arch images to connect to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111 in Google Protobuf format, simply start it as follows:
 ```
-docker run --rm --net=host chalmersrevere/opendlv.io-amd64:proxy-oxts-latest oxts 0.0.0.0 3000 111
+docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-oxts-latest oxts 0.0.0.0 3000 111
 ```
 
 ## Build from sources on the example of Ubuntu 16.04 LTS

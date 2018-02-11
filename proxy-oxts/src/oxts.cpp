@@ -28,36 +28,39 @@
 
 int32_t main(int32_t argc, char **argv) {
     int32_t retCode{0};
-    const std::string PROGRAM(argv[0]);
-    if (4 != argc) {
-        std::cerr << PROGRAM << " decodes latitude/longitude/heading from an OXTS GPS/INSS unit and publishes it to a running OpenDaVINCI session using the OpenDLV Standard Message Set." << std::endl;
-        std::cerr << "Usage:   " << PROGRAM << " <IPv4-address> <port> <OpenDaVINCI session>" << std::endl;
-        std::cerr << "Example: " << PROGRAM << " 0.0.0.0 3000 111" << std::endl;
+    auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
+    if ( (0 == commandlineArguments.count("oxts_port")) || (0 == commandlineArguments.count("cid")) ) {
+        std::cerr << argv[0] << " decodes latitude/longitude/heading from an OXTS GPS/INSS unit and publishes it to a running OpenDaVINCI session using the OpenDLV Standard Message Set." << std::endl;
+        std::cerr << "Usage:   " << argv[0] << " [--oxts_ip=<IPv4-address>] --oxts_port=<port> --cid=<OpenDaVINCI session> [--id=<Identifier in case of multiple OxTS units>] [--verbose]" << std::endl;
+        std::cerr << "Example: " << argv[0] << " --oxts_ip=0.0.0.0 --oxts_port=3000 --cid=111" << std::endl;
         retCode = 1;
     } else {
+        const uint32_t ID{(commandlineArguments["id"].size() != 0) ? static_cast<uint32_t>(std::stoi(commandlineArguments["id"])) : 0};
+        const bool VERBOSE{commandlineArguments.count("verbose") != 0};
+
         // Interface to a running OpenDaVINCI session (ignoring any incoming Envelopes).
-        cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(std::string{argv[3]})),
+        cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"])),
             [](auto){}
         };
 
         // Interface to OxTS.
-        const std::string OXTS_ADDRESS(argv[1]);
-        const std::string OXTS_PORT(argv[2]);
+        const std::string OXTS_ADDRESS((commandlineArguments.count("oxts_ip") == 0) ? "0.0.0.0" : commandlineArguments["oxts_ip"]);
+        const std::string OXTS_PORT(commandlineArguments["oxts_port"]);
         OxTSDecoder oxtsDecoder;
         cluon::UDPReceiver fromOXTS(OXTS_ADDRESS, std::stoi(OXTS_PORT),
-            [&od4Session = od4, &decoder=oxtsDecoder](std::string &&d, std::string &&/*from*/, std::chrono::system_clock::time_point &&tp) noexcept {
+            [&od4Session = od4, &decoder=oxtsDecoder, senderStamp = ID, VERBOSE](std::string &&d, std::string &&/*from*/, std::chrono::system_clock::time_point &&tp) noexcept {
             auto retVal = decoder.decode(d);
             if (retVal.first) {
                 cluon::data::TimeStamp sampleTime = cluon::time::convert(tp);
 
                 opendlv::proxy::GeodeticWgs84Reading msg1 = retVal.second.first;
-                od4Session.send(msg1, sampleTime);
+                od4Session.send(msg1, sampleTime, senderStamp);
 
                 opendlv::proxy::GeodeticHeadingReading msg2 = retVal.second.second;
-                od4Session.send(msg2, sampleTime);
+                od4Session.send(msg2, sampleTime, senderStamp);
 
                 // Print values on console.
-                {
+                if (VERBOSE) {
                     std::stringstream buffer;
                     msg1.accept([](uint32_t, const std::string &, const std::string &) {},
                                [&buffer](uint32_t, std::string &&, std::string &&n, auto v) { buffer << n << " = " << v << '\n'; },

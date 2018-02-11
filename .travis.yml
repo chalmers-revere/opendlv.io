@@ -25,7 +25,7 @@ install:
 
 
 script:
-- if [[ "${TRAVIS_BRANCH}" == "pre-release-proxy-oxts" ]]; then cd proxy-oxts && mkdir -p build && cd build && cmake .. && make && make test; fi
+- cd `echo ${TRAVIS_BRANCH} | sed -e 's/pre-release-//'` && mkdir -p build && cd build && cmake .. && make && make test; fi
 
 
 notifications:

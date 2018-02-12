@@ -8,12 +8,11 @@ running session using OpenDLV.io software ecosystem.
 ## Table of Contents
 * [Dependencies](#dependencies)
 * [Usage](#usage)
-* [Build from sources on the example of Ubuntu 16.04 LTS](#build-from-sources-on-the-example-of-ubuntu-1604-lts)
 * [License](#license)
 
 
 ## Dependencies
-No dependencies! The following dependencies as part of the source distribution:
+No dependencies! The following dependencies are part of the source distribution:
 
 * [bootstrap.css 4.0.0](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css)
 * [bootstrap 4.0.0](https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js)

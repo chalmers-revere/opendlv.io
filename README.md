@@ -30,6 +30,12 @@ The following microservices are available:
 
 ![screenshot from signal viewer](https://github.com/chalmers-revere/opendlv.io/raw/signal-viewer/signal-viewer/signal-viewer.png)
 
+* [vehicle-view](https://github.com/chalmers-revere/opendlv.io/tree/master/vehicle-view): view selected vehicle onboard data in your web-browser:
+
+    `docker run --rm --net=host chalmersrevere/opendlv.io-amd64:vehicle-view-latest 111`
+
+![screenshot from vehicle view](https://github.com/chalmers-revere/opendlv.io/raw/vehicle-view/vehicle-view/vehicle-view.png)
+
 
 ## License
 

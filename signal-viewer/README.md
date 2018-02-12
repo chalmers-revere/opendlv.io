@@ -38,7 +38,10 @@ docker run --rm --net=host chalmersrevere/opendlv.io-amd64:signal-viewer-latest 
 ```
 
 Now, simply point your web-browser to the IP address and port 8080 where you
-started this microservice.
+started this microservice to see any currently exchanged messages:
+
+![screenshot from signal viewer](https://github.com/chalmers-revere/opendlv.io/raw/signal-viewer/signal-viewer/signal-viewer.png)
+
 
 ## License
 

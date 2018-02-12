@@ -1,7 +1,9 @@
 #!/bin/sh
 
 for microservice in \
-    proxy-oxts-latest proxy-oxts-v0.0.1 \
+    proxy-oxts-latest \
+    proxy-oxts-v0.0.1 \
+    proxy-oxts-v0.0.2 \
     ; do
 cat <<EOF >/tmp/multi.yml
 image: chalmersrevere/opendlv.io-multi:$microservice

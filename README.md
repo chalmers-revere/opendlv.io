@@ -20,7 +20,7 @@ repository via Docker's public registry for:
 
 The following microservices are available:
 
-* [proxy-oxts](https://github.com/chalmers-revere/opendlv.io/tree/master/proxy-oxts): interface to OXTS GPS/INSS Units:
+* [proxy-oxts](https://github.com/chalmers-revere/opendlv.io/tree/master/proxy-oxts): interface to [OXTS GPS/INSS](https://www.oxts.com) units:
 
     `docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-oxts-latest`
 

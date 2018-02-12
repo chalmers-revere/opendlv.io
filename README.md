@@ -24,6 +24,12 @@ The following microservices are available:
 
     `docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-oxts-latest`
 
+* [signal-viewer](https://github.com/chalmers-revere/opendlv.io/tree/master/signal-viewer): view signals in your web-browser:
+
+    `docker run --rm --net=host chalmersrevere/opendlv.io-amd64:signal-viewer-latest 111`
+
+![screenshot from signal viewer](https://github.com/chalmers-revere/opendlv.io/raw/signal-viewer/signal-viewer/signal-viewer.png)
+
 
 ## License
 

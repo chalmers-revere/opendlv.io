@@ -31,7 +31,7 @@ RUN apk update && \
         git \
         make
 WORKDIR /tmp
-RUN git clone --branch master --depth 1 https://github.com/chalmers-revere/opendlv.io.git && \
+RUN git clone --branch proxy-oxts --depth 1 https://github.com/chalmers-revere/opendlv.io.git && \
     cd opendlv.io/proxy-oxts/ && \
     mkdir build && \
     cd build && \

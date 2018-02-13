@@ -29,7 +29,7 @@ This microservice is created automatically on changes to this repository via Doc
 
 To run this microservice using our pre-built Docker multi-arch images to connect to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111 in Google Protobuf format, simply start it as follows:
 ```
-docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-oxts-latest oxts --oxts_ip=0.0.0.0 --oxts_port=3000 --cid=111 --verbose
+docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-oxts-v0.0.2 oxts --oxts_ip=0.0.0.0 --oxts_port=3000 --cid=111 --verbose
 ```
 
 ## Build from sources on the example of Ubuntu 16.04 LTS

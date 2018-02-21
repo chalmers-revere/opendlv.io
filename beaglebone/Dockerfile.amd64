@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM alpine:3.7 as builder
+FROM alpine:3.7
 MAINTAINER Björnborg Nguyen "bjornborg.nguyen@chalmers.se"
 RUN apk update && \
     apk --no-cache add \

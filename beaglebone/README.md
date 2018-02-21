@@ -43,18 +43,35 @@ make && make test && make install
 ```
 
 ## Build it with docker
+Make sure you have the latest docker version. 1.17
 
+AMD64:
 Run
 ```
 docker build -t chalmersrevere/opendlv.io-multi:proxy-beaglebone-v0.0.1 -f Dockerfile.amd64 .
 ```
 
-## Execute with Docker-compose
+ARMHF:
+Run
+```
+docker build -t chalmersrevere/opendlv.io-multi-armhf:proxy-beaglebone-v0.0.1 -f Dockerfile.armhf .
+```
 
+## Execute with Docker-compose
+Make sure you have the latest docker-compose verison.
+
+AMD64:
 Run
 ```
 cd usecase
 docker-compose up
+```
+
+ARMHF:
+Run
+```
+cd usecase
+docker-compose -f beaglebone.yml up
 ```
 
 

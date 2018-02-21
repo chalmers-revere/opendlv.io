@@ -42,6 +42,21 @@ cmake -D CMAKE_BUILD_TYPE=Release ..
 make && make test && make install
 ```
 
+## Build it with docker
+
+Run
+```
+docker build -t chalmersrevere/opendlv.io-multi:proxy-beaglebone-v0.0.1 -f Dockerfile.amd64 .
+```
+
+## Execute with Docker-compose
+
+Run
+```
+cd usecase
+docker-compose up
+```
+
 
 ## License
 

@@ -15,28 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OXTS_DECODER
-#define OXTS_DECODER
+#ifndef BEAGLEBONE
+#define BEAGLEBONE
 
 #include "opendlv-standard-message-set.hpp"
 
 #include <string>
 #include <utility>
 
-class OxTSDecoder {
+class Beaglebone {
    private:
-    OxTSDecoder(const OxTSDecoder &) = delete;
-    OxTSDecoder(OxTSDecoder &&)      = delete;
-    OxTSDecoder &operator=(const OxTSDecoder &) = delete;
-    OxTSDecoder &operator=(OxTSDecoder &&) = delete;
+    Beaglebone(const Beaglebone &) = delete;
+    Beaglebone(Beaglebone &&)      = delete;
+    Beaglebone &operator=(const Beaglebone &) = delete;
+    Beaglebone &operator=(Beaglebone &&) = delete;
 
    public:
-    OxTSDecoder() = default;
-    ~OxTSDecoder() = default;
+    Beaglebone() = default;
+    ~Beaglebone() = default;
 
    public:
-    std::pair<bool, std::pair<opendlv::proxy::GeodeticWgs84Reading, opendlv::proxy::GeodeticHeadingReading> >
-        decode(const std::string &data) noexcept;
+    void decode(const std::string &data) noexcept;
 };
 
 #endif

@@ -21,7 +21,8 @@ RUN apk update && \
         cmake \
         g++ \
         git \
-        make 
+        make \
+        upx
 WORKDIR /tmp
 RUN git clone --branch feature.beaglebone --depth 1 https://github.com/chalmers-revere/opendlv.io.git && \
     cd opendlv.io/beaglebone/ && \

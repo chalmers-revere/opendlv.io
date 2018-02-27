@@ -24,6 +24,8 @@
 // #include <sstream>
 #include <string>
 
-void Beaglebone::decode(const std::string &data) noexcept {
+float Beaglebone::decode(const std::string &data) noexcept {
     std::cout << "Got data:" << data << std::endl;
+    float temp = std::stof(data);
+    return temp;
 }

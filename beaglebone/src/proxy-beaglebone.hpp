@@ -35,7 +35,7 @@ class Beaglebone {
     ~Beaglebone() = default;
 
    public:
-    void decode(const std::string &data) noexcept;
+    float decode(const std::string &data) noexcept;
 };
 
 #endif

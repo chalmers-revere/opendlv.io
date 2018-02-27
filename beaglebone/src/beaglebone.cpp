@@ -29,6 +29,14 @@
 #include <ctime>
 #include <chrono>
 
+
+void callOnReceive(cluon::data::Envelope data){
+    if (data.dataType() == static_cast<int32_t>(opendlv::proxy::TemperatureReading::ID())) {
+        opendlv::proxy::TemperatureReading t = cluon::extractMessage<opendlv::proxy::TemperatureReading>(std::move(data));
+        std::cout << "Test function: temperature data:" << t.temperature() << std::endl;
+    }
+}
+
 int32_t main(int32_t argc, char **argv) {
     int32_t retCode{0};
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
@@ -41,9 +49,13 @@ int32_t main(int32_t argc, char **argv) {
         const uint32_t ID{(commandlineArguments["id"].size() != 0) ? static_cast<uint32_t>(std::stoi(commandlineArguments["id"])) : 0};
         const bool VERBOSE{commandlineArguments.count("verbose") != 0};
 
-        // Interface to a running OpenDaVINCI session (ignoring any incoming Envelopes).
+        // Interface to a running OpenDaVINCI session.
+        cluon::data::Envelope data;
         cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"])),
-            [](auto){}
+            [&data](cluon::data::Envelope &&envelope){
+                callOnReceive(envelope);
+                data = envelope;
+            }
         };
 
         // Interface to OxTS.
@@ -53,14 +65,16 @@ int32_t main(int32_t argc, char **argv) {
         cluon::UDPReceiver UdpSocket(ADDR, std::stoi(PORT),
             [&od4Session = od4, &decoder=bb, senderStamp = ID, VERBOSE](std::string &&d, std::string &&/*from*/, std::chrono::system_clock::time_point &&tp) noexcept {
             
+            cluon::data::TimeStamp sampleTime = cluon::time::convert(tp);
             std::time_t epoch_time = std::chrono::system_clock::to_time_t(tp);
             std::cout << "Time: " << std::ctime(&epoch_time) << std::endl;
             // decoder = bb
-            decoder.decode(d);
+            float temp = decoder.decode(d);
             // if (retVal.first) {
 
-            //     opendlv::proxy::GeodeticWgs84Reading msg1 = retVal.second.first;
-            //     od4Session.send(msg1, sampleTime, senderStamp);
+            opendlv::proxy::TemperatureReading msg;
+            msg.temperature(temp);
+            od4Session.send(msg, sampleTime, senderStamp);
 
             //     // Print values on console.
             //     if (VERBOSE) {
@@ -75,12 +89,16 @@ int32_t main(int32_t argc, char **argv) {
 
         // Just sleep as this microservice is data driven.
         using namespace std::literals::chrono_literals;
-        uint32_t count = 0;
+        // uint32_t count = 0;
         while (od4.isRunning()) {
             std::this_thread::sleep_for(1s);
-            std::cout << "Ping " << count << std::endl;
-            count++;
+            if (data.dataType() == static_cast<int32_t>(opendlv::proxy::TemperatureReading::ID())) {
+                opendlv::proxy::TemperatureReading t = cluon::extractMessage<opendlv::proxy::TemperatureReading>(std::move(data));
+                std::cout << "While loop: Most recent temperature data:" << t.temperature() << std::endl;
+            }
+            // count++;
         }
     }
     return retCode;
 }
+

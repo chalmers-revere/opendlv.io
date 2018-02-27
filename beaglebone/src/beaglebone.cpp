@@ -54,6 +54,7 @@ int32_t main(int32_t argc, char **argv) {
         cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"])),
             [&data](cluon::data::Envelope &&envelope){
                 callOnReceive(envelope);
+                // IMPORTANT INTRODUCE A MUTEX
                 data = envelope;
             }
         };
@@ -94,6 +95,7 @@ int32_t main(int32_t argc, char **argv) {
             std::this_thread::sleep_for(1s);
             if (data.dataType() == static_cast<int32_t>(opendlv::proxy::TemperatureReading::ID())) {
                 opendlv::proxy::TemperatureReading t = cluon::extractMessage<opendlv::proxy::TemperatureReading>(std::move(data));
+                // IMPORTANT INTRODUCE A MUTEX
                 std::cout << "While loop: Most recent temperature data:" << t.temperature() << std::endl;
             }
             // count++;

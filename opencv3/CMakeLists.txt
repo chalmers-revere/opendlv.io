@@ -53,6 +53,16 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 ################################################################################
+# opencv
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+################################################################################
+# Eigen
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+include_directories(${Eigen3_INCLUDE_DIRS})
+
+################################################################################
 # Extract cluon-msc from cluon-complete.hpp.
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/cluon-msc
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
@@ -75,7 +85,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 ################################################################################
 # Gather all object code first to avoid double compilation.
 add_library(${PROJECT_NAME}-core OBJECT ${CMAKE_CURRENT_SOURCE_DIR}/src/proxy-beaglebone.cpp ${CMAKE_BINARY_DIR}/opendlv-standard-message-set.cpp)
-set(LIBRARIES Threads::Threads)
+
+set(LIBRARIES Threads::Threads ${OpenCV_LIBS} ${Eigen3_LIBS})
 
 ################################################################################
 # Create executable.

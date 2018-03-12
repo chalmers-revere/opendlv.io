@@ -22,16 +22,6 @@ You just need a C++14-compliant compiler to compile this project as it ships the
 
 You will need to install docker if you want to dockerize the software.
 
-## Usage
-This microservice is created automatically on changes to this repository via Docker's public registry for:
-* [x86_64](https://hub.docker.com/r/chalmersrevere/opendlv.io-amd64/tags/)
-* [armhf](https://hub.docker.com/r/chalmersrevere/opendlv.io-armhf/tags/)
-* [aarch64](https://hub.docker.com/r/chalmersrevere/opendlv.io-aarch64/tags/)
-
-To run this microservice using our pre-built Docker multi-arch images to connect to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111 in Google Protobuf format, simply start it as follows:
-```
-docker run --rm --net=host chalmersrevere/opencv beaglebone --port=2222 --cid=111 --verbose=1
-```
 
 ## Build from sources on the example of Ubuntu 16.04 LTS
 To build this software, you need cmake, C++14 or newer, and make. Having these

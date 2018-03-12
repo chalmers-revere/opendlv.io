@@ -14,12 +14,13 @@ This repository provides source code for beaglebones for the OpenDLV.io software
 
 
 ## Dependencies
-No dependencies! You just need a C++14-compliant compiler to compile this project as it ships the following dependencies as part of the source distribution:
+You just need a C++14-compliant compiler to compile this project as it ships the following dependencies as part of the source distribution:
 
 * [libcluon](https://github.com/chrberger/libcluon) - [![License: GPLv3](https://img.shields.io/badge/license-GPL--3-blue.svg
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 * [Unit Test Framework Catch2](https://github.com/catchorg/Catch2/releases/tag/v2.1.1) - [![License: Boost Software License v1.0](https://img.shields.io/badge/License-Boost%20v1-blue.svg)](http://www.boost.org/LICENSE_1_0.txt)
 
+You will need to install docker if you want to dockerize the software.
 
 ## Usage
 This microservice is created automatically on changes to this repository via Docker's public registry for:
@@ -29,7 +30,7 @@ This microservice is created automatically on changes to this repository via Doc
 
 To run this microservice using our pre-built Docker multi-arch images to connect to an OXTS GPS/INSS unit broadcasting data to `195.0.0.33:3000` and to publish the messages according to OpenDLV Standard Message Set into session 111 in Google Protobuf format, simply start it as follows:
 ```
-docker run --rm --net=host chalmersrevere/opendlv.io-multi:proxy-beaglebone-v0.0.1 beaglebone --cid=111 --verbose
+docker run --rm --net=host chalmersrevere/opencv beaglebone --port=2222 --cid=111 --verbose=1
 ```
 
 ## Build from sources on the example of Ubuntu 16.04 LTS
@@ -38,7 +39,7 @@ preconditions, just run `cmake` and `make` as follows:
 
 ```
 mkdir build && cd build
-cmake -D CMAKE_BUILD_TYPE=Release ..
+cmake ..
 make && make test && make install
 ```
 
@@ -48,14 +49,9 @@ Make sure you have the latest docker version. 1.17
 AMD64:
 Run
 ```
-docker build -t chalmersrevere/opendlv.io-multi:proxy-beaglebone-v0.0.1 -f Dockerfile.amd64 .
+docker build -t chalmersrevere/opencv -f arch.amd64 .
 ```
 
-ARMHF:
-Run
-```
-docker build -t chalmersrevere/opendlv.io-multi-armhf:proxy-beaglebone-v0.0.1 -f Dockerfile.armhf .
-```
 
 ## Execute with Docker-compose
 Make sure you have the latest docker-compose verison.
@@ -67,12 +63,6 @@ cd usecase
 docker-compose up
 ```
 
-ARMHF:
-Run
-```
-cd usecase
-docker-compose -f beaglebone.yml up
-```
 
 
 ## License

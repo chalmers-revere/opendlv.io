@@ -26,6 +26,9 @@
 #include <string>
 #include <thread>
 
+#include <opencv2/core.hpp>
+#include <eigen3/Eigen/Dense>
+
 #include <ctime>
 #include <chrono>
 

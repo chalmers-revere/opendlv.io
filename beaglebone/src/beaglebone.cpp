@@ -52,52 +52,52 @@ int32_t main(int32_t argc, char **argv) {
         // Interface to a running OpenDaVINCI session.
         cluon::data::Envelope data;
         cluon::OD4Session od4{static_cast<uint16_t>(std::stoi(commandlineArguments["cid"])),
-            [&data](cluon::data::Envelope &&envelope){
+            [](cluon::data::Envelope &&envelope){
                 callOnReceive(envelope);
                 // IMPORTANT INTRODUCE A MUTEX
-                data = envelope;
+                // data = envelope;
             }
         };
 
-        // Interface to OxTS.
-        const std::string ADDR("0.0.0.0");
-        const std::string PORT(commandlineArguments["port"]);
-        Beaglebone bb;
-        cluon::UDPReceiver UdpSocket(ADDR, std::stoi(PORT),
-            [&od4Session = od4, &decoder=bb, senderStamp = ID, VERBOSE](std::string &&d, std::string &&/*from*/, std::chrono::system_clock::time_point &&tp) noexcept {
+        // // Interface to OxTS.
+        // const std::string ADDR("0.0.0.0");
+        // const std::string PORT(commandlineArguments["port"]);
+        // Beaglebone bb;
+        // cluon::UDPReceiver UdpSocket(ADDR, std::stoi(PORT),
+        //     [&od4Session = od4, &decoder=bb, senderStamp = ID, VERBOSE](std::string &&d, std::string &&/*from*/, std::chrono::system_clock::time_point &&tp) noexcept {
             
-            cluon::data::TimeStamp sampleTime = cluon::time::convert(tp);
-            std::time_t epoch_time = std::chrono::system_clock::to_time_t(tp);
-            std::cout << "Time: " << std::ctime(&epoch_time) << std::endl;
-            // decoder = bb
-            float temp = decoder.decode(d);
-            // if (retVal.first) {
+        //     cluon::data::TimeStamp sampleTime = cluon::time::convert(tp);
+        //     std::time_t epoch_time = std::chrono::system_clock::to_time_t(tp);
+        //     std::cout << "Time: " << std::ctime(&epoch_time) << std::endl;
+        //     // decoder = bb
+        //     float temp = decoder.decode(d);
+        //     // if (retVal.first) {
 
-            opendlv::proxy::TemperatureReading msg;
-            msg.temperature(temp);
+        //     opendlv::proxy::TemperatureReading msg;
+        //     msg.temperature(temp);
             od4Session.send(msg, sampleTime, senderStamp);
 
-            //     // Print values on console.
-            //     if (VERBOSE) {
-            //         std::stringstream buffer;
-            //         msg1.accept([](uint32_t, const std::string &, const std::string &) {},
-            //                    [&buffer](uint32_t, std::string &&, std::string &&n, auto v) { buffer << n << " = " << v << '\n'; },
-            //                    []() {});
-            //         std::cout << buffer.str() << std::endl;
-            //     }
-            // }
-        });
+        //     //     // Print values on console.
+        //     //     if (VERBOSE) {
+        //     //         std::stringstream buffer;
+        //     //         msg1.accept([](uint32_t, const std::string &, const std::string &) {},
+        //     //                    [&buffer](uint32_t, std::string &&, std::string &&n, auto v) { buffer << n << " = " << v << '\n'; },
+        //     //                    []() {});
+        //     //         std::cout << buffer.str() << std::endl;
+        //     //     }
+        //     // }
+        // });
 
         // Just sleep as this microservice is data driven.
         using namespace std::literals::chrono_literals;
         // uint32_t count = 0;
         while (od4.isRunning()) {
             std::this_thread::sleep_for(1s);
-            if (data.dataType() == opendlv::proxy::TemperatureReading::ID()) {
-                opendlv::proxy::TemperatureReading t = cluon::extractMessage<opendlv::proxy::TemperatureReading>(std::move(data));
-                // IMPORTANT INTRODUCE A MUTEX
-                std::cout << "While loop: Most recent temperature data:" << t.temperature() << std::endl;
-            }
+            // if (data.dataType() == opendlv::proxy::TemperatureReading::ID() ) {
+            //     opendlv::proxy::TemperatureReading t = cluon::extractMessage<opendlv::proxy::TemperatureReading>(std::move(data));
+            //     // IMPORTANT INTRODUCE A MUTEX
+            //     std::cout << "While loop: Most recent temperature data:" << t.temperature() << std::endl;
+            // }
             // count++;
         }
     }

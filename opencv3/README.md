@@ -20,7 +20,7 @@ You just need a C++14-compliant compiler to compile this project as it ships the
 )](https://www.gnu.org/licenses/gpl-3.0.txt)
 * [Unit Test Framework Catch2](https://github.com/catchorg/Catch2/releases/tag/v2.1.1) - [![License: Boost Software License v1.0](https://img.shields.io/badge/License-Boost%20v1-blue.svg)](http://www.boost.org/LICENSE_1_0.txt)
 
-You will need to install docker if you want to dockerize the software.
+You will need to install docker if you want to dockerize the software and docker-compose for easy deployment.
 
 
 ## Build from sources on the example of Ubuntu 16.04 LTS

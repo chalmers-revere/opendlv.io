@@ -26,6 +26,9 @@ RUN apk update && \
         upx \
         ccache \
         opencv-dev \
+        opencv-libs \
+        opencv \
+        eigen \
         eigen-dev
 
 WORKDIR /tmp

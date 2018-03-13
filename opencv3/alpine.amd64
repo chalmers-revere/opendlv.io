@@ -13,8 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-FROM alpine:3.7 AS builder
+FROM alpine:edge AS builder
 MAINTAINER Björnborg Nguyen "bjornborg.nguyen@chalmers.se"
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk update && \
     apk --no-cache add \
         ca-certificates \
@@ -23,15 +24,13 @@ RUN apk update && \
         git \
         make \
         upx \
+        ccache \
         gfortran \
         openblas-dev \
         icu \
-        ffmpeg-dev \
-        ccache \
-        gtk+3.0-dev \
-        gst-plugins-base-dev \
-        libdc1394-dev
-
+        opencv-dev \
+        opencv-libs \
+        opencv 
 
 WORKDIR /tmp
 
@@ -41,14 +40,6 @@ RUN git clone https://github.com/eigenteam/eigen-git-mirror.git && \
     cmake .. && \
     make install
 
-RUN git clone https://github.com/opencv/opencv.git && \
-    mkdir -p opencv/build && \
-    cd opencv/build && \
-    cmake .. && \
-    make -j4 && \
-    make install
-
-
 RUN git clone --branch feature.beaglebone --depth 1 https://github.com/chalmers-revere/opendlv.io.git && \
     cd opendlv.io/opencv3/ && \
     mkdir build && \
@@ -57,8 +48,8 @@ RUN git clone --branch feature.beaglebone --depth 1 https://github.com/chalmers-
     make && make test && make install && upx -9 /tmp/beaglebone-dest/bin/beaglebone
 
 
-# Part to deploy beaglebone.
-FROM alpine:3.7
+# # Part to deploy beaglebone.
+FROM alpine:edge
 MAINTAINER Björnborg Nguyen "bjornborg.nguyen@chalmers.se"
 
 WORKDIR /usr/bin

@@ -1,7 +1,0 @@
-version: '2'
-
-services:
-    beaglebone:
-        image: ${IMAGE_ARMHF}
-        network_mode: "host"
-        command: "beaglebone --port=${PORT} --cid=${CID} --id=1 --verbose=1"

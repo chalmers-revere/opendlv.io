@@ -18,6 +18,10 @@ cmake_minimum_required(VERSION 3.2)
 project(beaglebone)
 
 ################################################################################
+# Adding cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+
+################################################################################
 # Defining the relevant versions of OpenDLV Standard Message Set and libcluon.
 set(OPENDLV_STANDARD_MESSAGE_SET opendlv-standard-message-set-v0.9.1.odvd)
 set(CLUON_COMPLETE cluon-complete-v0.0.52.hpp)

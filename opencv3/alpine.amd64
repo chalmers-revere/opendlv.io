@@ -35,7 +35,7 @@ RUN apk update && \
 WORKDIR /tmp
 
 RUN git clone https://github.com/eigenteam/eigen-git-mirror.git && \
-    mkdir -p build eigen-git-mirror/build && \
+    mkdir -p eigen-git-mirror/build && \
     cd eigen-git-mirror/build && \
     cmake .. && \
     make install
@@ -48,7 +48,7 @@ RUN git clone --branch feature.beaglebone --depth 1 https://github.com/chalmers-
     make && make test && make install && upx -9 /tmp/beaglebone-dest/bin/beaglebone
 
 
-# # Part to deploy beaglebone.
+# # # Part to deploy beaglebone.
 FROM alpine:edge
 MAINTAINER Björnborg Nguyen "bjornborg.nguyen@chalmers.se"
 
